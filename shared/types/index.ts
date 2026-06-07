@@ -154,6 +154,7 @@ export type WSMessageType =
   | 'VIEWER_COUNT'
   | 'RIDER_PAUSED'
   | 'RIDER_RESUMED'
+  | 'LOOP_RESET'
   | 'SPONSOR_ACTIVE';
 
 export interface WSMessage {

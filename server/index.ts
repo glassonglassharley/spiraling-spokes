@@ -385,6 +385,13 @@ createWebSocketServer(httpServer);
 // ─── Startup ──────────────────────────────────────────────────────────────────
 
 async function startup() {
+  httpServer.listen(PORT, () => {
+    console.log(`\nAXLE server on http://localhost:${PORT}`);
+    console.log(`   WebSocket: ws://localhost:${PORT}/ws`);
+    console.log(`   Mode: ${LIVE_MODE ? 'LIVE' : 'MOCK'}`);
+    console.log(`   Frame interval: ${FRAME_INTERVAL_MS}ms (${FRAME_INTERVAL_SECONDS}s)\n`);
+  });
+
   if (LIVE_MODE) {
     const [
       { advanceAndCapture },
@@ -474,6 +481,8 @@ async function startup() {
     });
   }
 
+  return;
+
   httpServer.listen(PORT, () => {
     console.log(`\n🚴 AXLE server on http://localhost:${PORT}`);
     console.log(`   WebSocket: ws://localhost:${PORT}/ws`);
@@ -483,6 +492,5 @@ async function startup() {
 }
 
 startup().catch((err) => {
-  console.error('Startup failed:', err);
-  process.exit(1);
+  console.error('[Startup] Runtime initialization failed:', err);
 });
