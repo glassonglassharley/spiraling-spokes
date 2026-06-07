@@ -1,8 +1,0 @@
-﻿{
-  "name": "spiraling-spokes",
-  "rootDirectory": "apps/web",
-  "framework": "nextjs",
-  "installCommand": "cd ../.. && npm install",
-  "buildCommand": "npm run build",
-  "outputDirectory": ".next"
-}

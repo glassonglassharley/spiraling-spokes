@@ -31,3 +31,7 @@ vercel-env-setup.txt
 # Logs
 *.log
 npm-debug.log*
+
+.vercel
+.railway/
+.env*
