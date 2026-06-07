@@ -422,6 +422,20 @@ async function startup() {
     startTTSWorker();
     startMilestoneWorker();
 
+    // Auto-initialize trip on startup if TRIP_ID is set and no state exists yet
+    const TRIP_ID = process.env.TRIP_ID;
+    if (TRIP_ID) {
+      const { getRiderState } = await import('../shared/redis/client');
+      const { initializeRiderState } = await import('../services/rider/frameAdvancer');
+      const existing = await getRiderState();
+      if (!existing || existing.trip_id !== TRIP_ID) {
+        console.log(`[Startup] Initializing rider state for trip ${TRIP_ID}`);
+        await initializeRiderState(TRIP_ID);
+      } else {
+        console.log(`[Startup] Rider already on trip ${TRIP_ID} at waypoint ${existing.current_waypoint_index}`);
+      }
+    }
+
     cron.schedule(`*/${FRAME_INTERVAL_SECONDS} * * * * *`, async () => {
       try { await advanceAndCapture(); } catch (err) { console.error('[Cron:frame]', err); }
     });
