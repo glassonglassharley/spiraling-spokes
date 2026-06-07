@@ -253,7 +253,7 @@ function MockFrame({ image, prevImage, prevOpacity }: { image: string; prevImage
       {prevImage && (
         <img src={prevImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: prevOpacity, transition: 'opacity 500ms ease', zIndex: 1 }} />
       )}
-      <img key={image} src={image} alt="SPOKY route" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2, animation: 'crossfadeIn 500ms ease both' }} />
+      <img key={image} src={image} alt="SPOKY route" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2, animation: 'frameEnter 500ms ease forwards, frameRide 7500ms linear 500ms forwards', transformOrigin: 'center center' }} />
     </>
   );
 }
@@ -355,7 +355,7 @@ export default function CompanionSite() {
       <AmbientSound ref={soundRef} sceneType={scene.sceneType ?? ''} />
 
       {/* ── FULL-SCREEN VIEW ── */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 2 }}>
+      <div style={{ position: 'absolute', top: 0, bottom: 0, left: -4, right: -4, zIndex: 2, animation: 'bikeSway 3s ease-in-out infinite' }}>
         {GMAPS_KEY ? (
           <PovViewer
             lat={scene.lat ?? 40.7128}
@@ -367,6 +367,11 @@ export default function CompanionSite() {
           <MockFrame image={image} prevImage={prevImage} prevOpacity={prevOpacity} />
         )}
       </div>
+
+      {/* Speed flash on frame advance */}
+      {isAdvancing && (
+        <div style={{ position: 'absolute', inset: 0, zIndex: 30, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, rgba(255,255,255,0.15) 0%, transparent 65%)', animation: 'speedFlash 200ms ease-out forwards' }} />
+      )}
 
       {/* Subtle vignette — edges only */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.08) 100%)' }} />
@@ -463,6 +468,16 @@ export default function CompanionSite() {
             <a href="/sponsors" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, padding: '5px 11px', fontSize: 11, color: 'rgba(255,255,255,0.50)', textDecoration: 'none', fontFamily: SANS, whiteSpace: 'nowrap' }}>📍 Sponsor</a>
           </div>
         </div>
+      </div>
+
+      {/* ── HANDLEBAR ── */}
+      <div style={{ position: 'absolute', bottom: -20, left: '50%', marginLeft: -200, zIndex: 5, pointerEvents: 'none', animation: 'handlebarBounce 1.2s ease-in-out infinite', width: 400 }}>
+        <svg width="400" height="80" viewBox="0 0 400 80" fill="none">
+          <path d="M0 60 Q60 28 100 48 Q150 64 200 58 Q250 52 300 48 Q340 28 400 60" stroke="rgba(255,255,255,0.20)" strokeWidth="8" strokeLinecap="round" fill="none" />
+          <path d="M200 58 L200 80" stroke="rgba(255,255,255,0.20)" strokeWidth="8" strokeLinecap="round" />
+          <rect x="0" y="52" width="28" height="14" rx="5" fill="rgba(255,255,255,0.14)" />
+          <rect x="372" y="52" width="28" height="14" rx="5" fill="rgba(255,255,255,0.14)" />
+        </svg>
       </div>
 
       {/* ── DRAWERS & MODALS ── */}
