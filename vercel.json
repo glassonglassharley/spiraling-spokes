@@ -1,8 +1,8 @@
 {
   "name": "spiraling-spokes",
-  "buildCommand": "npm run build --workspace=apps/web",
-  "outputDirectory": "apps/web/.next",
+  "rootDirectory": "apps/web",
   "framework": "nextjs",
-  "installCommand": "npm install",
-  "ignoreCommand": "exit 1"
+  "installCommand": "cd ../.. && npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next"
 }
