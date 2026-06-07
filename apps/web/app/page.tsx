@@ -59,6 +59,7 @@ function CommentaryBox({ text, thinking }: { text: string; thinking: boolean }) 
       <div style={{
         fontSize: 14, lineHeight: 1.6, fontStyle: 'italic',
         color: 'rgba(255,255,255,0.80)', fontFamily: SANS,
+        textShadow: '0 2px 8px rgba(0,0,0,0.8)',
         minHeight: 44,
         display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
       } as React.CSSProperties}>
@@ -343,13 +344,13 @@ export default function CompanionSite() {
       <img key={image} src={image} alt="SPOKY route" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2, animation: 'crossfadeIn 500ms ease both' }} />
 
       {/* Subtle vignette — edges only */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.18) 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.08) 100%)' }} />
 
       {/* Top gradient — slim, for header legibility */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '14%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to bottom, rgba(0,0,0,0.40) 0%, transparent 100%)' }} />
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '14%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, transparent 100%)' }} />
 
       {/* Bottom gradient — enough to read text, not enough to hide the road */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '48%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.30) 42%, transparent 100%)' }} />
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '48%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 42%, transparent 100%)' }} />
 
       {/* ── FLOATING HEADER ── */}
       <header style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '20px 28px' }}>
@@ -394,7 +395,7 @@ export default function CompanionSite() {
           {/* Left: city, road, weather */}
           <div style={{ flex: 1, maxWidth: 520 }}>
             <div style={{ fontSize: 9, letterSpacing: 6, color: G, fontFamily: MONO, fontWeight: 500, marginBottom: 8 }}>SPOKY IS IN</div>
-            <div style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.05, letterSpacing: -0.5, fontFamily: DISPLAY, textShadow: '0 2px 24px rgba(0,0,0,0.85)', marginBottom: 7 }}>
+            <div style={{ fontSize: 40, fontWeight: 700, lineHeight: 1.05, letterSpacing: -0.5, fontFamily: DISPLAY, textShadow: '0 2px 8px rgba(0,0,0,0.8)', marginBottom: 7 }}>
               {scene.city},&nbsp;<span style={{ color: 'rgba(255,255,255,0.48)' }}>{scene.state}</span>
             </div>
             <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.44)', fontFamily: SANS }}>
