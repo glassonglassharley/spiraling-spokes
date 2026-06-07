@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="AXLE mock scene FOREST ROAD">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#052e16"/><stop offset="0.65" stop-color="#166534"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#374151"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.08"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <circle cx="260" cy="120" r="78" fill="#86efac" opacity="0.55"/>
+  <g opacity="0.72">
+    <path d="M0 330 C180 250 290 350 420 280 S650 300 760 245 S1030 280 1280 210 L1280 720 L0 720 Z" fill="#166534"/>
+    <path d="M0 410 C200 350 360 430 520 355 S820 390 940 330 S1120 345 1280 310 L1280 720 L0 720 Z" fill="#0b1220" opacity="0.55"/>
+  </g>
+  <g opacity="0.95">
+    <path d="M500 720 L620 360 L690 360 L850 720 Z" fill="url(#road)"/>
+    <path d="M635 382 L640 382 L650 720 L620 720 Z" fill="#86efac" opacity="0.9"/>
+    <path d="M672 382 L677 382 L720 720 L690 720 Z" fill="#e5e7eb" opacity="0.7"/>
+  </g>
+  <g opacity="0.75"><polygon points="0,430 35,250 70,430" fill="#052e16"/><rect x="31" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="70,430 105,250 140,430" fill="#052e16"/><rect x="101" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="140,430 175,250 210,430" fill="#052e16"/><rect x="171" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="210,430 245,250 280,430" fill="#052e16"/><rect x="241" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="280,430 315,250 350,430" fill="#052e16"/><rect x="311" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="350,430 385,250 420,430" fill="#052e16"/><rect x="381" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="420,430 455,250 490,430" fill="#052e16"/><rect x="451" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="490,430 525,250 560,430" fill="#052e16"/><rect x="521" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="560,430 595,250 630,430" fill="#052e16"/><rect x="591" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="630,430 665,250 700,430" fill="#052e16"/><rect x="661" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="700,430 735,250 770,430" fill="#052e16"/><rect x="731" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="770,430 805,250 840,430" fill="#052e16"/><rect x="801" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="840,430 875,250 910,430" fill="#052e16"/><rect x="871" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="910,430 945,250 980,430" fill="#052e16"/><rect x="941" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="980,430 1015,250 1050,430" fill="#052e16"/><rect x="1011" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="1050,430 1085,250 1120,430" fill="#052e16"/><rect x="1081" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="1120,430 1155,250 1190,430" fill="#052e16"/><rect x="1151" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="1190,430 1225,250 1260,430" fill="#052e16"/><rect x="1221" y="420" width="8" height="70" fill="#3f2f1f"/><polygon points="1260,430 1295,250 1330,430" fill="#052e16"/><rect x="1291" y="420" width="8" height="70" fill="#3f2f1f"/></g>
+  <rect width="1280" height="720" filter="url(#grain)" opacity="0.45"/>
+</svg>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>AXLE Stream Canvas</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: 1920px; height: 1080px; overflow: hidden; background: #000; font-family: -apple-system, BlinkMacSystemFont, sans-serif; color: #fff; }
+
+    #frame-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+    #frame-prev { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    #top-bar { position: absolute; top: 0; left: 0; right: 0; padding: 28px 36px; background: linear-gradient(to bottom, rgba(0,0,0,0.75), transparent); }
+    #location { font-size: 32px; font-weight: 700; }
+    #road { font-size: 16px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    #top-right { position: absolute; top: 28px; right: 36px; display: flex; align-items: center; gap: 16px; }
+    #viewer-count { font-size: 18px; color: rgba(255,255,255,0.8); }
+    #live-badge { background: #dc2626; font-size: 13px; font-weight: 800; padding: 6px 14px; border-radius: 4px; letter-spacing: 2px; }
+    #progress-wrap { margin-top: 16px; height: 4px; background: rgba(255,255,255,0.12); border-radius: 2px; }
+    #progress-bar { height: 100%; width: 0%; background: #5dc89a; border-radius: 2px; transition: width 1s ease; }
+    #progress-labels { display: flex; justify-content: space-between; margin-top: 6px; font-size: 14px; color: rgba(255,255,255,0.4); }
+
+    #commentary { position: absolute; bottom: 130px; left: 48px; max-width: 720px; border-left: 3px solid #5dc89a; padding: 10px 20px; background: rgba(0,0,0,0.78); border-radius: 0 8px 8px 0; }
+    #axle-label { font-size: 12px; color: #5dc89a; letter-spacing: 3px; font-weight: 600; margin-bottom: 6px; }
+    #axle-text { font-size: 22px; font-style: italic; line-height: 1.45; }
+
+    #chat-overlay { position: absolute; right: 40px; bottom: 130px; width: 340px; }
+    .chat-msg { margin-bottom: 8px; background: rgba(0,0,0,0.6); border-radius: 6px; padding: 7px 12px; font-size: 17px; }
+    .chat-username { font-weight: 700; margin-right: 6px; }
+    .source-axle { color: #5dc89a; }
+    .source-twitch { color: #9146ff; }
+    .source-platform { color: #60a5fa; }
+
+    #stats { position: absolute; bottom: 40px; right: 40px; text-align: right; }
+    #miles-num { font-size: 48px; font-weight: 800; line-height: 1; }
+    #miles-label { font-size: 13px; color: rgba(255,255,255,0.4); letter-spacing: 2px; margin-top: 2px; }
+
+    #logo { position: absolute; bottom: 40px; left: 48px; }
+    #logo-text { font-size: 28px; font-weight: 900; letter-spacing: 4px; color: #5dc89a; }
+    #logo-sub { font-size: 11px; color: rgba(255,255,255,0.3); letter-spacing: 2px; margin-top: 2px; }
+
+    #milestone { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); display: none; }
+    #milestone.show { display: flex; }
+    #milestone-label { font-size: 14px; letter-spacing: 6px; color: #5dc89a; margin-bottom: 12px; }
+    #milestone-name { font-size: 80px; font-weight: 900; line-height: 1; text-align: center; }
+
+    #pause-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.85); display: none; }
+    #pause-overlay.show { display: flex; }
+  </style>
+</head>
+<body>
+  <img id="frame-prev" src="" alt="" />
+  <img id="frame-bg" src="" alt="" />
+
+  <div id="top-bar">
+    <div style="position:relative">
+      <div id="location">Loading...</div>
+      <div id="road"></div>
+      <div id="top-right">
+        <div id="viewer-count">0 watching</div>
+        <div id="live-badge">LIVE</div>
+      </div>
+    </div>
+    <div id="progress-wrap"><div id="progress-bar"></div></div>
+    <div id="progress-labels">
+      <span id="miles-done">Mile 0</span>
+      <span id="miles-left">NYC → LA</span>
+    </div>
+  </div>
+
+  <div id="commentary">
+    <div id="axle-label">AXLE · speaking</div>
+    <div id="axle-text">Rolling...</div>
+  </div>
+
+  <div id="chat-overlay"></div>
+
+  <div id="stats">
+    <div id="miles-num">0</div>
+    <div id="miles-label">MILES TRAVELED</div>
+  </div>
+
+  <div id="logo">
+    <div id="logo-text">AXLE</div>
+    <div id="logo-sub">AI BIKE LIVESTREAM</div>
+  </div>
+
+  <div id="milestone">
+    <div style="text-align:center">
+      <div id="milestone-label">MILESTONE REACHED</div>
+      <div id="milestone-name"></div>
+    </div>
+  </div>
+
+  <div id="pause-overlay">
+    <div style="text-align:center">
+      <div style="font-size:80px">🌙</div>
+      <div style="font-size:48px; font-weight:700; margin-top:16px">AXLE is camping</div>
+    </div>
+  </div>
+
+  <audio id="audio" style="display:none"></audio>
+
+  <script src="canvas.js"></script>
+</body>
+</html>

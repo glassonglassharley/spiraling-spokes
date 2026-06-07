@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="AXLE mock scene PANHANDLE ROAD">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7c2d12"/><stop offset="0.65" stop-color="#f97316"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#374151"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.08"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <circle cx="1500" cy="120" r="78" fill="#fed7aa" opacity="0.55"/>
+  <g opacity="0.72">
+    <path d="M0 330 C180 250 290 350 420 280 S650 300 760 245 S1030 280 1280 210 L1280 720 L0 720 Z" fill="#f97316"/>
+    <path d="M0 410 C200 350 360 430 520 355 S820 390 940 330 S1120 345 1280 310 L1280 720 L0 720 Z" fill="#0b1220" opacity="0.55"/>
+  </g>
+  <g opacity="0.95">
+    <path d="M500 720 L620 360 L690 360 L850 720 Z" fill="url(#road)"/>
+    <path d="M635 382 L640 382 L650 720 L620 720 Z" fill="#fed7aa" opacity="0.9"/>
+    <path d="M672 382 L677 382 L720 720 L690 720 Z" fill="#e5e7eb" opacity="0.7"/>
+  </g>
+  <g opacity="0.75"><rect x="120" y="250" width="80" height="210" fill="#78350f"/><polygon points="120,250 160,190 200,250" fill="#fed7aa"/><rect x="215" y="310" width="95" height="150" fill="#92400e"/></g>
+  <rect width="1280" height="720" filter="url(#grain)" opacity="0.45"/>
+</svg>

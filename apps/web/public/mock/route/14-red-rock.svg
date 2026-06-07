@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="AXLE mock scene RED ROCK HIGHWAY">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#581c0c"/><stop offset="0.65" stop-color="#dc2626"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#374151"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.08"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <circle cx="1500" cy="120" r="78" fill="#fecaca" opacity="0.55"/>
+  <g opacity="0.72">
+    <path d="M0 330 C180 250 290 350 420 280 S650 300 760 245 S1030 280 1280 210 L1280 720 L0 720 Z" fill="#dc2626"/>
+    <path d="M0 410 C200 350 360 430 520 355 S820 390 940 330 S1120 345 1280 310 L1280 720 L0 720 Z" fill="#0b1220" opacity="0.55"/>
+  </g>
+  <g opacity="0.95">
+    <path d="M500 720 L620 360 L690 360 L850 720 Z" fill="url(#road)"/>
+    <path d="M635 382 L640 382 L650 720 L620 720 Z" fill="#fecaca" opacity="0.9"/>
+    <path d="M672 382 L677 382 L720 720 L690 720 Z" fill="#e5e7eb" opacity="0.7"/>
+  </g>
+  <g opacity="0.75"><path d="M80 450 L160 300 L250 450 Z" fill="#7f1d1d" opacity="0.8"/><path d="M190 450 L270 300 L360 450 Z" fill="#7f1d1d" opacity="0.8"/><path d="M1040 450 L1120 300 L1210 450 Z" fill="#7f1d1d" opacity="0.8"/><path d="M1160 450 L1240 300 L1330 450 Z" fill="#7f1d1d" opacity="0.8"/></g>
+  <rect width="1280" height="720" filter="url(#grain)" opacity="0.45"/>
+</svg>

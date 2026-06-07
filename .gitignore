@@ -1,0 +1,29 @@
+# Environment — never commit real keys
+.env
+.env.local
+.env.production
+*.env
+
+# Dependencies
+node_modules/
+
+# Next.js build output
+apps/web/.next/
+apps/web/out/
+
+# TypeScript build output
+dist/
+
+# Test output
+scripts/test-output/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel local notes (not for git)
+vercel-env-setup.txt
+
+# Logs
+*.log
+npm-debug.log*

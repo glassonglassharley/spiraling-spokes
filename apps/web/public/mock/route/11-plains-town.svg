@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="AXLE mock scene PLAINS TOWN">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#713f12"/><stop offset="0.65" stop-color="#eab308"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <linearGradient id="road" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#374151"/><stop offset="1" stop-color="#111827"/></linearGradient>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="table" tableValues="0 0.08"/></feComponentTransfer></filter>
+  </defs>
+  <rect width="1280" height="720" fill="url(#sky)"/>
+  <circle cx="1500" cy="120" r="78" fill="#fef3c7" opacity="0.55"/>
+  <g opacity="0.72">
+    <path d="M0 330 C180 250 290 350 420 280 S650 300 760 245 S1030 280 1280 210 L1280 720 L0 720 Z" fill="#eab308"/>
+    <path d="M0 410 C200 350 360 430 520 355 S820 390 940 330 S1120 345 1280 310 L1280 720 L0 720 Z" fill="#0b1220" opacity="0.55"/>
+  </g>
+  <g opacity="0.95">
+    <path d="M500 720 L620 360 L690 360 L850 720 Z" fill="url(#road)"/>
+    <path d="M635 382 L640 382 L650 720 L620 720 Z" fill="#fef3c7" opacity="0.9"/>
+    <path d="M672 382 L677 382 L720 720 L690 720 Z" fill="#e5e7eb" opacity="0.7"/>
+  </g>
+  <g opacity="0.75"><rect x="85" y="350" width="260" height="95" rx="6" fill="#1f2937"/><rect x="110" y="315" width="210" height="44" fill="#fef3c7"/><text x="215" y="344" text-anchor="middle" font-family="monospace" font-size="26" font-weight="900" fill="#111827">DINER</text></g>
+  <rect width="1280" height="720" filter="url(#grain)" opacity="0.45"/>
+</svg>
