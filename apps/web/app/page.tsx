@@ -1,8 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { commentaryForScene, mockChatMessages, mockSceneLibrary, sceneImageUrl, type MockScene } from '../lib/demo';
 import AmbientSound, { type AmbientSoundRef } from '../components/AmbientSound';
+
+const PovViewer = dynamic(() => import('./components/PovViewer'), { ssr: false });
 
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8080/ws';
 const TWITCH_CHANNEL = process.env.NEXT_PUBLIC_TWITCH_CHANNEL ?? 'spiralingspokes';
@@ -244,6 +247,17 @@ function HoldingScreen() {
   );
 }
 
+function MockFrame({ image, prevImage, prevOpacity }: { image: string; prevImage: string | null; prevOpacity: number }) {
+  return (
+    <>
+      {prevImage && (
+        <img src={prevImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: prevOpacity, transition: 'opacity 500ms ease', zIndex: 1 }} />
+      )}
+      <img key={image} src={image} alt="SPOKY route" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2, animation: 'crossfadeIn 500ms ease both' }} />
+    </>
+  );
+}
+
 const STATE_MARKERS = [
   { label: 'NY', pct: 0  }, { label: 'PA', pct: 3  }, { label: 'OH', pct: 15 },
   { label: 'MO', pct: 30 }, { label: 'OK', pct: 47 }, { label: 'TX', pct: 53 },
@@ -264,6 +278,7 @@ export default function CompanionSite() {
   const [voteOpen, setVoteOpen] = useState(false);
   const [vote, setVote]         = useState<Vote>(INITIAL_VOTE);
   const [soundOn, setSoundOn]   = useState(false);
+  const [isAdvancing, setIsAdvancing] = useState(false);
   const [isResting]             = useState(false);
 
   const indexRef   = useRef(0);
@@ -284,6 +299,8 @@ export default function CompanionSite() {
     currentImg.current = nextImage;
     setImage(nextImage);
     setScene(sc);
+    setIsAdvancing(true);
+    setTimeout(() => setIsAdvancing(false), 1000);
     setIsThinking(true);
     setTimeout(() => {
       setCommentary(commentaryForScene(sc, mockChatMessages, i));
@@ -337,11 +354,19 @@ export default function CompanionSite() {
     <div style={{ position: 'fixed', inset: 0, background: '#080808', overflow: 'hidden' }}>
       <AmbientSound ref={soundRef} sceneType={scene.sceneType ?? ''} />
 
-      {/* ── FULL-SCREEN IMAGE ── */}
-      {prevImage && (
-        <img src={prevImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: prevOpacity, transition: 'opacity 500ms ease', zIndex: 1 }} />
-      )}
-      <img key={image} src={image} alt="SPOKY route" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2, animation: 'crossfadeIn 500ms ease both' }} />
+      {/* ── FULL-SCREEN VIEW ── */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 2 }}>
+        {GMAPS_KEY ? (
+          <PovViewer
+            lat={scene.lat ?? 40.7128}
+            lng={scene.lng ?? -74.0060}
+            heading={scene.heading ?? 90}
+            isAdvancing={isAdvancing}
+          />
+        ) : (
+          <MockFrame image={image} prevImage={prevImage} prevOpacity={prevOpacity} />
+        )}
+      </div>
 
       {/* Subtle vignette — edges only */}
       <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.08) 100%)' }} />

@@ -75,3 +75,8 @@ body {
 .animate-fadeIn        { animation: fadeIn 0.4s ease both; }
 .animate-milestone     { animation: milestoneIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
 .animate-pulse-dot     { animation: pulse-dot 1.4s ease-in-out infinite; }
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
