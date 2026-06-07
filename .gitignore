@@ -9,7 +9,11 @@ node_modules/
 
 # Next.js build output
 apps/web/.next/
+apps/web/.next.locked.*/
 apps/web/out/
+
+# Vercel local project linkage
+apps/web/.vercel/
 
 # TypeScript build output
 dist/

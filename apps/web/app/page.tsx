@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { commentaryForScene, mockChatMessages, mockSceneLibrary, type MockScene } from '../../../shared/mock/demo';
+import { commentaryForScene, mockChatMessages, mockSceneLibrary, type MockScene } from '../lib/demo';
 import AmbientSound, { type AmbientSoundRef } from '../components/AmbientSound';
 
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8080/ws';

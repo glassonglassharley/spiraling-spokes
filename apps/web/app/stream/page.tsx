@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { commentaryForScene, demoRoutePresets, mockChatMessages, mockSceneLibrary, type MockScene } from '../../../../shared/mock/demo';
+import { commentaryForScene, demoRoutePresets, mockChatMessages, mockSceneLibrary, type MockScene } from '../../lib/demo';
 
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8080/ws';
 const GMAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
