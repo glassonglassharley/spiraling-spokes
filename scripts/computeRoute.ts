@@ -11,7 +11,7 @@ const get = (flag: string) => {
 
 const origin = get('--origin') ?? 'Battery Park, New York, NY';
 const destination = get('--destination') ?? 'Santa Monica Pier, Los Angeles, CA';
-const interval = parseInt(get('--interval') ?? '100', 10);
+const interval = parseInt(get('--interval') ?? '20', 10);
 const avoidHighways = args.includes('--avoid-highways');
 
 const waypointsRaw = get('--waypoints');

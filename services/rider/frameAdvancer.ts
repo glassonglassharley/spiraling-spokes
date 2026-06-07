@@ -3,6 +3,8 @@ import { getRiderState, setRiderState } from '../../shared/redis/client';
 import { fetchStreetViewImage, NoImageryError } from './streetView';
 import { getSolarTimeOfDay } from '../../shared/utils/time';
 import { broadcastToClients } from '../../server/broadcast';
+
+const LOOP_ROUTE = process.env.LOOP_ROUTE === 'true';
 import { commentaryQueue, milestoneQueue } from '../../workers/queues';
 import type { Waypoint, RiderState } from '../../shared/types';
 
@@ -35,8 +37,12 @@ export async function advanceAndCapture(): Promise<void> {
   );
 
   if (!waypoint) {
-    console.log('[FrameAdvancer] No more waypoints — trip complete!');
-    await completeTripFlow(state);
+    if (LOOP_ROUTE) {
+      await loopTripFlow(state);
+    } else {
+      console.log('[FrameAdvancer] No more waypoints — trip complete!');
+      await completeTripFlow(state);
+    }
     return;
   }
 
@@ -168,6 +174,15 @@ async function skipOnMissingCoverage(state: RiderState, count: number): Promise<
     current_waypoint_index: state.current_waypoint_index + count,
   };
   await setRiderState(newState);
+}
+
+async function loopTripFlow(state: RiderState): Promise<void> {
+  await setRiderState({ ...state, current_waypoint_index: 0 });
+  await broadcastToClients({
+    type: 'LOOP_RESET',
+    payload: { tripId: state.trip_id, totalMiles: state.miles_traveled },
+  });
+  console.log('[FrameAdvancer] Route looped back to start');
 }
 
 async function completeTripFlow(state: RiderState): Promise<void> {

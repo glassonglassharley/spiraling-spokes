@@ -18,7 +18,8 @@ import {
 } from '../shared/mock/demo';
 
 const PORT = parseInt(process.env.PORT ?? '8080', 10);
-const FRAME_INTERVAL_SECONDS = 8;
+const FRAME_INTERVAL_MS = parseInt(process.env.FRAME_INTERVAL_MS ?? '3000', 10);
+const FRAME_INTERVAL_SECONDS = Math.max(1, Math.round(FRAME_INTERVAL_MS / 1000));
 const LIVE_MODE = process.env.LIVE_MODE === 'true';
 
 const app = express();
@@ -463,7 +464,7 @@ async function startup() {
     console.log(`\n🚴 AXLE server on http://localhost:${PORT}`);
     console.log(`   WebSocket: ws://localhost:${PORT}/ws`);
     console.log(`   Mode: ${LIVE_MODE ? 'LIVE' : 'MOCK'}`);
-    console.log(`   Frame interval: ${FRAME_INTERVAL_SECONDS}s\n`);
+    console.log(`   Frame interval: ${FRAME_INTERVAL_MS}ms (${FRAME_INTERVAL_SECONDS}s)\n`);
   });
 }
 

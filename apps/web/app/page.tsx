@@ -8,6 +8,7 @@ import AmbientSound, { type AmbientSoundRef } from '../components/AmbientSound';
 const PovViewer = dynamic(() => import('./components/PovViewer'), { ssr: false });
 
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8080/ws';
+const BACKEND_URL = WS_URL.replace(/^ws:/, 'http:').replace(/^wss:/, 'https:').replace(/\/ws$/, '');
 const TWITCH_CHANNEL = process.env.NEXT_PUBLIC_TWITCH_CHANNEL ?? 'spiralingspokes';
 const GMAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
 const INITIAL_IMAGE = sceneImageUrl(mockSceneLibrary[0], GMAPS_KEY);
@@ -280,6 +281,7 @@ export default function CompanionSite() {
   const [soundOn, setSoundOn]   = useState(false);
   const [isAdvancing, setIsAdvancing] = useState(false);
   const [isResting]             = useState(false);
+  const [speed, setSpeed]       = useState(1);
 
   const indexRef   = useRef(0);
   const wsWorked   = useRef(false);
@@ -457,6 +459,23 @@ export default function CompanionSite() {
           <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.35)', fontFamily: MONO, whiteSpace: 'nowrap', flexShrink: 0 }}>
             Mile {Math.round(scene.miles ?? 0).toLocaleString()} · Day 14
           </span>
+
+          {/* Divider */}
+          <div style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />
+
+          {/* Speed control */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 6, padding: '2px', flexShrink: 0 }}>
+            {([0.5, 1, 2, 3] as const).map(s => (
+              <button
+                key={s}
+                onClick={() => {
+                  setSpeed(s);
+                  fetch(`${BACKEND_URL}/api/admin/speed`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ multiplier: s }) }).catch(() => {});
+                }}
+                style={{ background: speed === s ? G : 'transparent', color: speed === s ? '#000' : 'rgba(255,255,255,0.38)', border: 'none', borderRadius: 4, padding: '3px 7px', fontSize: 10, fontWeight: 700, cursor: 'pointer', fontFamily: MONO, whiteSpace: 'nowrap', transition: 'all 0.15s' }}
+              >{s}x</button>
+            ))}
+          </div>
 
           {/* Divider */}
           <div style={{ width: 1, height: 12, background: 'rgba(255,255,255,0.08)', flexShrink: 0 }} />

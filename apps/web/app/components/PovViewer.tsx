@@ -61,15 +61,14 @@ export default function PovViewer({ lat, lng, heading, isAdvancing }: PovViewerP
 
     if (isAdvancing) {
       const startHeading = panoramaRef.current.getPov().heading;
-      const targetHeading = heading;
-      const duration = 800;
+      const diff = ((heading - startHeading + 540) % 360) - 180;
+      const duration = 1000;
       const start = Date.now();
 
       const animate = () => {
         const progress = Math.min((Date.now() - start) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
-        const current = startHeading + (targetHeading - startHeading) * eased;
-        panoramaRef.current?.setPov({ heading: current, pitch: -10 });
+        panoramaRef.current?.setPov({ heading: startHeading + diff * eased, pitch: -10 });
         if (progress < 1) requestAnimationFrame(animate);
       };
       requestAnimationFrame(animate);
@@ -212,7 +211,7 @@ function DragHint() {
       animation: 'fadeOut 1s ease 4s forwards',
     }}>
       <span>↔</span>
-      <span>Drag to look around · SPOKY moves every 8s</span>
+      <span>Drag to look around · SPOKY moves every 3s</span>
     </div>
   );
 }
