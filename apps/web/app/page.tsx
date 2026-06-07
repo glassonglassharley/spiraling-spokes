@@ -1,11 +1,13 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { commentaryForScene, mockChatMessages, mockSceneLibrary, type MockScene } from '../lib/demo';
+import { commentaryForScene, mockChatMessages, mockSceneLibrary, sceneImageUrl, type MockScene } from '../lib/demo';
 import AmbientSound, { type AmbientSoundRef } from '../components/AmbientSound';
 
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8080/ws';
 const TWITCH_CHANNEL = process.env.NEXT_PUBLIC_TWITCH_CHANNEL ?? 'spiralingspokes';
+const GMAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
+const INITIAL_IMAGE = sceneImageUrl(mockSceneLibrary[0], GMAPS_KEY);
 
 const G = '#4ade80';
 const PANEL = 'rgba(10,10,10,0.88)';
@@ -145,7 +147,7 @@ function RouteSelector() {
   const [emailInput, setEmailInput] = useState('');
   const [emailSent, setEmailSent] = useState(false);
   return (
-    <div style={{ position: 'absolute', bottom: 76, left: 24, zIndex: 20 }}>
+    <div style={{ position: 'absolute', top: 76, left: 28, zIndex: 20 }}>
       <button onClick={() => setOpen(o => !o)} style={{ display: 'flex', alignItems: 'center', gap: 8, background: PANEL, backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: 8, padding: '8px 14px', cursor: 'pointer', color: 'rgba(255,255,255,0.5)', fontSize: 10, letterSpacing: 3, fontFamily: MONO }}>
         SPOKY&apos;S ROUTES
         <span style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', fontSize: 7, opacity: 0.5, display: 'inline-block' }}>▼</span>
@@ -287,7 +289,7 @@ function BottomBar({ scene, pct, onVoteOpen }: { scene: Partial<MockScene>; pct:
 
 export default function CompanionSite() {
   const [scene, setScene]       = useState<Partial<MockScene>>(mockSceneLibrary[0]);
-  const [image, setImage]       = useState(mockSceneLibrary[0].image);
+  const [image, setImage]       = useState(INITIAL_IMAGE);
   const [prevImage, setPrevImage] = useState<string | null>(null);
   const [prevOpacity, setPrevOpacity] = useState(0);
   const [commentary, setCommentary] = useState(commentaryForScene(mockSceneLibrary[0], mockChatMessages, 0));
@@ -301,7 +303,7 @@ export default function CompanionSite() {
 
   const indexRef   = useRef(0);
   const wsWorked   = useRef(false);
-  const currentImg = useRef(mockSceneLibrary[0].image);
+  const currentImg = useRef(INITIAL_IMAGE);
   const soundRef   = useRef<AmbientSoundRef>(null);
 
   const pct = scene.miles != null && scene.milesRemaining != null
@@ -310,11 +312,12 @@ export default function CompanionSite() {
   const headingLabel = (h: number) => h < 45 || h > 315 ? 'N' : h < 135 ? 'E' : h < 225 ? 'S' : 'W';
 
   const applyScene = useCallback((sc: MockScene, i: number) => {
+    const nextImage = sceneImageUrl(sc, GMAPS_KEY);
     setPrevImage(currentImg.current);
     setPrevOpacity(1);
     setTimeout(() => setPrevOpacity(0), 40);
-    currentImg.current = sc.image;
-    setImage(sc.image);
+    currentImg.current = nextImage;
+    setImage(nextImage);
     setScene(sc);
     setIsThinking(true);
     setTimeout(() => {
@@ -381,13 +384,13 @@ export default function CompanionSite() {
         <img key={image} src={image} alt="SPOKY route" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2, animation: 'crossfadeIn 400ms ease both' }} />
 
         {/* Vignette */}
-        <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, transparent 38%, rgba(0,0,0,0.48) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none', background: 'radial-gradient(ellipse at center, transparent 54%, rgba(0,0,0,0.26) 100%)' }} />
 
         {/* Top gradient (header legibility) */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '22%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to bottom, rgba(0,0,0,0.75) 0%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '18%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, transparent 100%)' }} />
 
         {/* Bottom gradient (overlay legibility) */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '48%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.55) 40%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '42%', zIndex: 3, pointerEvents: 'none', background: 'linear-gradient(to top, rgba(0,0,0,0.74) 0%, rgba(0,0,0,0.36) 45%, transparent 100%)' }} />
 
         {/* ── FLOATING HEADER ── */}
         <header style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '22px 28px' }}>

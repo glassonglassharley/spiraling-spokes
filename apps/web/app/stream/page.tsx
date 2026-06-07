@@ -1,10 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { commentaryForScene, demoRoutePresets, mockChatMessages, mockSceneLibrary, type MockScene } from '../../lib/demo';
+import { commentaryForScene, mockChatMessages, mockSceneLibrary, sceneImageUrl, type MockScene } from '../../lib/demo';
 
 const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? 'ws://localhost:8080/ws';
 const GMAPS_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY;
+const INITIAL_IMAGE = sceneImageUrl(mockSceneLibrary[0], GMAPS_KEY);
 
 type FramePayload = MockScene & { frameUrl?: string | null; lat?: number; lng?: number };
 interface ChatMsg { username: string; message: string; source: string; }
@@ -149,7 +150,7 @@ function ConfettiParticles() {
 export default function StreamCanvas() {
   const [frame, setFrame]       = useState<Partial<FramePayload>>(mockSceneLibrary[0]);
   const [prevImage, setPrevImage] = useState<string | null>(null);
-  const [image, setImage]       = useState(mockSceneLibrary[0].image);
+  const [image, setImage]       = useState(INITIAL_IMAGE);
   const [commentary, setCommentary] = useState(commentaryForScene(mockSceneLibrary[0], mockChatMessages, 0));
   const [isThinking, setIsThinking] = useState(false);
   const [chat, setChat]         = useState<ChatMsg[]>(mockChatMessages.slice(0, 6));
@@ -162,7 +163,7 @@ export default function StreamCanvas() {
   const indexRef    = useRef(0);
   const wsWorked    = useRef(false);
   const isPausedRef = useRef(false);
-  const currentImg  = useRef(mockSceneLibrary[0].image);
+  const currentImg  = useRef(INITIAL_IMAGE);
 
   useEffect(() => { isPausedRef.current = isPaused; }, [isPaused]);
 
@@ -170,9 +171,10 @@ export default function StreamCanvas() {
     ? (frame.miles / (frame.miles + frame.milesRemaining)) * 100 : 0;
 
   const applyScene = useCallback((scene: MockScene, i: number) => {
+    const nextImage = sceneImageUrl(scene, GMAPS_KEY);
     setPrevImage(currentImg.current);
-    currentImg.current = scene.image;
-    setImage(scene.image);
+    currentImg.current = nextImage;
+    setImage(nextImage);
     setFrame(scene);
     setIsThinking(true);
     setTimeout(() => {

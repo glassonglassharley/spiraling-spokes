@@ -25,6 +25,26 @@ export interface DemoRoutePreset {
 
 const base = '/mock/route';
 
+export function sceneImageUrl(
+  scene: Pick<MockScene, 'image' | 'lat' | 'lng' | 'heading'>,
+  googleMapsKey?: string,
+  size = '640x360'
+): string {
+  if (!googleMapsKey) return scene.image;
+
+  const params = new URLSearchParams({
+    size,
+    location: `${scene.lat},${scene.lng}`,
+    heading: String(Math.round(scene.heading)),
+    pitch: '0',
+    fov: '90',
+    source: 'outdoor',
+    key: googleMapsKey,
+  });
+
+  return `https://maps.googleapis.com/maps/api/streetview?${params.toString()}`;
+}
+
 export const mockSceneLibrary: MockScene[] = [
   { id: 'nyc-dawn', image: `${base}/01-city.svg`, sceneType: 'city canyon', city: 'New York', state: 'NY', roadName: 'Hudson River Greenway', lat: 40.7484, lng: -73.9857, heading: 274, miles: 0, milesRemaining: 2790, weather: '68°F, low clouds, light crosswind', isMilestone: true, milestoneName: 'Rolling out of New York' },
   { id: 'jersey-suburb', image: `${base}/02-suburb.svg`, sceneType: 'suburban morning streets', city: 'Montclair', state: 'NJ', roadName: 'Bloomfield Avenue', lat: 40.8259, lng: -74.2090, heading: 251, miles: 18, milesRemaining: 2772, weather: '70°F, bright overcast, 6 mph wind' },
